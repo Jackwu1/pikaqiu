@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>皮卡丘</title>
+		<style id="styleTag"></style>
+		<style type="text/css">
+			.code-wrapper > #code{
+				height: 50vh;
+				overflow: scroll;
+			}
+			.btn {
+				position: fixed;
+				z-index: 2;
+				right: 100px;
+				top: 0;
+			}
+			.btn:hover {
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="code-wrapper">
+			<pre id="code"></pre>
+		</div>
+		<div class="btn">
+			<butto>慢速</butto>
+			<butto>中速</butto>
+			<butto>快速</butto>
+		</div>
+		<div class="box">
+			<div class="nose"></div>
+			<div class="leftEye"></div>
+			<div class="rightEye"></div>
+			<div class="leftCircle"></div>
+			<div class="rightCircle"></div>
+			<div class="upperLip left"></div>
+			<div class="upperLip right"></div>
+			<div class="lowerLip-wrapper">
+				<div class="lowerLip"></div>
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+let css1 = `
+.box{
+	position: relative;
+	background: #FEE433;
+	height: 50vh;
+	bottom: 0;
+}
+.box > .nose {
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-radius: 20px;
+	border: 12px solid black;
+	border-bottom-color: transparent;
+	border-left-color: transparent;
+	border-right-color: transparent;
+	left: 50%;
+	top: 25%;
+	margin-left: -12px;
+}
+.box > .leftEye {
+	width: 49px;
+	height: 49px;
+	background-color: black;
+	border-radius: 49px;
+	position: absolute;
+	left: 50%;
+	top: 25%;
+	margin-left: -10%;
+	margin-top: -2%;
+}
+.box > .leftEye:before {
+	content: '';
+	display: block;
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	background-color: white;
+	border-radius: 24px;
+	left: 5px;
+}
+.box > .rightEye {
+	width: 49px;
+	height: 49px;
+	background-color: black;
+	border-radius: 49px;
+	position: absolute;
+	right: 50%;
+	top: 25%;
+	margin-right: -10%;
+	margin-top: -2%;
+}
+.box > .rightEye:before {
+	content: '';
+	display: block;
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	background-color: white;
+	border-radius: 24px;
+	left: 5px;
+}
+.box > .leftCircle {
+	width: 68px;
+	height: 68px;
+	border-radius: 68px;
+	background-color: red;
+	border: 1px solid black;
+	position: absolute;
+	left: 50%;
+	top:50%;
+	margin-left: -13%;
+}
+.box > .rightCircle {
+	width: 68px;
+	height: 68px;
+	border-radius: 68px;
+	background-color: red;
+	border: 1px solid black;
+	position: absolute;
+	right: 50%;
+	top:50%;
+	margin-right: -13%;
+}
+.box > .upperLip {
+	height: 25px;
+	width: 80px;
+	border: 2px solid black;
+	background: #FEE433;
+	z-index: 1;
+}
+.box > .upperLip.left {
+	border-top: 0px;
+	border-right: 0px;
+	border-radius: 200px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	position: absolute;
+	left: 50%;
+	top: 35%;
+	margin-left: -82px;
+	transform: rotate(-20deg);
+}
+.box > .upperLip.right {
+	border-top: 0px;
+	border-left: 0px;
+	border-radius: 200px;
+	border-bottom-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-top-left-radius: 0px;
+	position: absolute;
+	right: 50%;
+	top: 35%;
+	margin-right: -82px;
+	transform: rotate(20deg);
+}
+.box > .lowerLip-wrapper {
+	width: 300px;
+	height: 110px;
+	left: 50%;
+	position: absolute;
+	top: 40%;
+	margin-left: -150px;
+	overflow: hidden;
+}
+.box > .lowerLip-wrapper > .lowerLip {
+	width: 300px;
+	height: 3500px;
+	border: 2px solid black;
+	border-radius: 200px/2000px;
+	background-color: #990513;
+	position: absolute;
+	bottom: 0;
+	overflow: hidden;
+}
+.box > .lowerLip-wrapper > .lowerLip:after {
+	content: '';
+	display: block;
+	background: #FC4A62;
+	position: absolute;
+	left: 50%;
+	margin-left: -50px;
+	bottom: -20px;
+	width: 100px;
+	height: 100px;
+	border-radius: 100px;
+}
+`
+let index = 1;
+let speed = 10;
+let btn = document.getElementsByClassName('btn')[0].children;
+for(let i = 0; i < btn.length; i++) {
+	btn[i].onclick = function() {
+		if(i === 0) {
+			speed = 100
+		} else if(i === 1) {
+			speed = 50
+		} else if(i === 2) {
+			speed = 10
+		}
+	}
+}
+console.log(btn)
+	function writeCss() {
+		let code = document.getElementById('code');
+		let styleTag = document.getElementById('styleTag');
+		let text = ``;
+		let id =  setTimeout(function fn1() {
+			code.innerHTML = css1.substring(0, index);
+			styleTag.innerHTML = css1.substring(0, index);
+			code.scrollTop = code.scrollHeight
+			index++;
+			if(index < css1.length) {
+				setTimeout(fn1, speed)
+			}
+		},speed)
+	}
+	writeCss()
+</script>
